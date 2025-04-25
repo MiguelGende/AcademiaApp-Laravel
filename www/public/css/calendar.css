@@ -1,0 +1,82 @@
+/* Contenedor principal del calendario */
+.calendar-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* Estilo del encabezado */
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Botones de navegación */
+  .nav-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .nav-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilo de la tabla del calendario */
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .calendar-table th, .calendar-table td {
+    width: 14.28%;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;
+    border: 1px solid #ddd;
+  }
+  
+  .calendar-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Celdas de días */
+  .calendar-table td {
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+  
+  .calendar-table td:hover {
+    background-color: #e3f2fd;
+  }
+  
+  /* Estilo del mes y año */
+  .month-year {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Hacer los días seleccionados o el día actual destacados */
+  .calendar-table td.selected {
+    background-color: #ffeb3b;
+    color: #333;
+  }
+  
+  .calendar-table td.today {
+    background-color: #f44336;
+    color: white;
+  }
+  
+
+  

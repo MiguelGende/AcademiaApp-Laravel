@@ -1,0 +1,103 @@
+:root {
+    --primary: #007bff;
+    --white: #ffffff;
+    --light: #f8f9fa;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --border-color: #dee2e6;
+    --font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-family);
+    margin: 0;
+    background-color: var(--light);
+  }
+
+  .main-header.navbar {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1030;
+    position: relative;
+  }
+
+  .navbar-nav {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-item {
+    margin-right: 1rem;
+    position: relative;
+  }
+
+  .nav-link {
+    color: var(--gray-dark);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+    display: inline-block;
+  }
+
+  .nav-link:hover {
+    color: var(--primary);
+  }
+
+  .navbar-search-block {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--white);
+    padding: 10px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1050;
+    border: 1px solid var(--border-color);
+  }
+
+  .navbar-search-block.show {
+    display: block !important;
+  }
+
+  .form-inline {
+    display: flex;
+    align-items: center;
+  }
+
+  .input-group-sm {
+    display: flex;
+    width: 100%;
+  }
+
+  .form-control-navbar {
+    flex: 1;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  .input-group-append {
+    display: flex;
+  }
+
+  .btn-navbar {
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    color: var(--gray-dark);
+    cursor: pointer;
+  }
+
+  .btn-navbar:hover {
+    color: var(--primary);
+  }
