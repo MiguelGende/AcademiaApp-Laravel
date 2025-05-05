@@ -13,8 +13,20 @@ use Illuminate\Support\Facades\Route;
 
 //Route::redirect('/', '/private/dashboard', 301);
 
+//Route::get('/', [PublicController::class, 'index'])
+//            ->name('public.home');
+
+// Página de inicio pública
 Route::get('/', [PublicController::class, 'index'])
             ->name('public.home');
+
+// Ruta para la vista de registro
+Route::get('/register', [AuthController::class, 'showRegisterForm'])
+            ->name('register');
+
+// Ruta para manejar el registro (esto es solo un ejemplo)
+Route::post('/register', [AuthController::class, 'register'])
+            ->name('register.store');  
 
 Route::get('/private/dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
