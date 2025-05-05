@@ -1,51 +1,63 @@
 <?php
 
-use App\Http\Controllers\AlumnosController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CalendarioController;
-use App\Http\Controllers\CursosController;
-use App\Http\Controllers\Dashboard;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\NoticiasController;
-use App\Http\Controllers\PublicController;
-use App\Http\Controllers\SecretariaController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CursosController;
+use App\Http\Controllers\AlumnosController;
+use App\Http\Controllers\CalendarioController;
+use App\Http\Controllers\NoticiasController;
+use App\Http\Controllers\SecretariaController;
 
-//Route::redirect('/', '/private/dashboard', 301);
-
-//Route::get('/', [PublicController::class, 'index'])
-//            ->name('public.home');
+/*
+|--------------------------------------------------------------------------
+| Rutas Públicas
+|--------------------------------------------------------------------------
+*/
 
 // Página de inicio pública
-Route::get('/', [PublicController::class, 'index'])
-            ->name('public.home');
+Route::get('/', [PublicController::class, 'index'])->name('public.home');
 
-// Ruta para la vista de registro
-Route::get('/register', [AuthController::class, 'showRegisterForm'])
-            ->name('register');
+// Vista de registro
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 
-// Ruta para manejar el registro (esto es solo un ejemplo)
-Route::post('/register', [AuthController::class, 'register'])
-            ->name('register.store');  
+// Procesar formulario de registro (simulado)
+Route::post('/register', [AuthController::class, 'register'])->name('register.store');
 
-Route::get('/private/dashboard', [DashboardController::class, 'index'])
-            ->name('dashboard');
-        
+// Vista de login
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
-Route::get('private/cursos', [CursosController::class, 'index'])
-            ->name('cursos');
+// Procesar login (simulado)
+Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
 
-Route::get('/private/alumnos', [AlumnosController::class, 'index'])
-            ->name('alumnos');
+// Logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/private/calendario', [CalendarioController::class, 'index'])
-            ->name('calendario');
 
-Route::get('/private/noticias', [NoticiasController::class, 'index'])
-            ->name('noticias');
+/*
+|--------------------------------------------------------------------------
+| Rutas Privadas (Requieren autenticación simulada)
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/private/secretaria', [SecretariaController::class, 'index'])
-            ->name('secretaria');
+Route::middleware(['auth.simulado'])->group(function () {
 
-Route::get('/private/login', [AuthController::class, 'index'])
-            ->name('login');            
+    // Dashboard principal
+    Route::get('/private/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Módulo de cursos
+    Route::get('/private/cursos', [CursosController::class, 'index'])->name('cursos');
+
+    // Módulo de alumnos
+    Route::get('/private/alumnos', [AlumnosController::class, 'index'])->name('alumnos');
+
+    // Módulo de calendario
+    Route::get('/private/calendario', [CalendarioController::class, 'index'])->name('calendario');
+
+    // Módulo de noticias
+    Route::get('/private/noticias', [NoticiasController::class, 'index'])->name('noticias');
+
+    // Secretaría
+    Route::get('/private/secretaria', [SecretariaController::class, 'index'])->name('secretaria');
+});

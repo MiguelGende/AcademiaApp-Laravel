@@ -42,11 +42,12 @@ body.sidebar-collapse .content-wrapper.custom-full-width {
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Cerrar sesión</p>
+                  <p>Cerrar sesión</p>
               </a>
             </li>
+
           </ul>
         </li>
 
@@ -138,4 +139,9 @@ body.sidebar-collapse .content-wrapper.custom-full-width {
     <!-- /.sidebar-menu -->
   </div>
   <!-- /.sidebar -->
+   <!-- Formulario oculto para logout -->
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+
 </aside>

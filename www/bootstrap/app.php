@@ -11,8 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Registrar alias personalizados de middleware
+        $middleware->alias([
+            'auth.simulado' => \App\Http\Middleware\AuthSimulado::class,  // Aquí debe coincidir el nombre del middleware
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
+        // Aquí puedes manejar excepciones personalizadas si lo necesitas
+    })
+    ->create();
