@@ -1,3 +1,13 @@
+<style>
+  /* Ajuste cuando el sidebar está contraído */
+body.sidebar-collapse .content-wrapper.custom-full-width {
+    margin-left: 0 !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+</style>
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="index3.html" class="brand-link">
@@ -26,13 +36,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('register') }}" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Registro</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('logout') }}" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Cerrar sesión</p>
               </a>
@@ -44,7 +54,7 @@
         <li class="nav-header">CAMPUS VIRTUAL</li>
 
         <li class="nav-item">
-          <a href="{{ route('calendar') }}" class="nav-link">
+          <a href="{{ route('calendario') }}" class="nav-link">
             <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Calendario
@@ -55,11 +65,12 @@
 
 
         <li class="nav-item">
-          <a href="pages/gallery.html" class="nav-link">
-            <i class="nav-icon far fa-image"></i>
-            <p>Noticias</p>
+          <a href="{{ route('noticias') }}" class="nav-link">
+            <i class="nav-icon fas fa-newspaper"></i>
+              <p>Noticias</p>
           </a>
         </li>
+
 
         <!-- Contáctanos -->
         <li class="nav-item">
@@ -72,7 +83,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/mailbox/mailbox.html" class="nav-link">
+              <a href="{{ route('secretaria') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Secretaría Online</p>
               </a>
@@ -103,19 +114,19 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/examples/invoice.html" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Informática</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/profile.html" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Programación</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/e-commerce.html" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>E-commerce</p>
               </a>

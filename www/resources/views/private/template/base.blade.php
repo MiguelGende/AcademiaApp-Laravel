@@ -28,14 +28,14 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  @include('template.navbar')
-  @include('template.sidebar')
+  @include('private.template.navbar')
+  @include('private.template.sidebar')
 
   <div class="content-wrapper">
     @yield('content')
   </div>
 
-  @include('template.footer')
+  @include('private.template.footer')
 
 </div>
 

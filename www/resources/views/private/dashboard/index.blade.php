@@ -1,4 +1,4 @@
-@extends('template.base')
+@extends('private.template.base')
 
 @section('title', 'Dashboard')
 
@@ -36,7 +36,7 @@
           <div class="icon">
             <i class="fas fa-book"></i>
           </div>
-          <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="{{ route('cursos') }}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
@@ -44,13 +44,13 @@
         <!-- small box -->
         <div class="small-box bg-success">
           <div class="inner">
-            <h3>23</h3>
+            <h3>25</h3>
             <p>Alumnos Inscritos</p>
           </div>
           <div class="icon">
             <i class="fas fa-users"></i>
           </div>
-          <a href="#" class="small-box-footer">Ver listado <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="{{ route('alumnos') }}" class="small-box-footer">Ver listado <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
@@ -81,10 +81,10 @@
       </div>
     </div>
 
-    @include('template.notices')
+    @include('private.template.notices')
 
     <!-- Include the calendar -->
-    @include('template.calendar')
+    @include('private.template.calendar')
 
   </div>
 </section>

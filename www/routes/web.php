@@ -1,34 +1,35 @@
 <?php
 
+use App\Http\Controllers\AlumnosController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalendarioController;
+use App\Http\Controllers\CursosController;
+use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NoticiasController;
+use App\Http\Controllers\SecretariaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    //return view('dashboard.index');
-    return view('home');
-});
+Route::redirect('/', '/private/dashboard', 301);
 
-// Ruta para Login
-Route::get('/login', function () {
-    return view('login'); // Crea el archivo login.blade.php
-})->name('login');
+Route::get('/private/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
+        
 
-// Ruta para Registro
-Route::get('/register', function () {
-    return view('register'); // Crea el archivo register.blade.php
-})->name('register');
+Route::get('private/cursos', [CursosController::class, 'index'])
+            ->name('cursos');
 
-// Ruta para Cerrar Sesión (usar POST en lugar de GET)
-Route::post('/logout', function () {
-    // Lógica para cerrar sesión
-    //auth()->logout();
-    return redirect('/'); // O redirigir a una página específica
-})->name('logout');
+Route::get('/private/alumnos', [AlumnosController::class, 'index'])
+            ->name('alumnos');
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/private/calendario', [CalendarioController::class, 'index'])
+            ->name('calendario');
 
-Route::get('/calendar', function () {
-    return view('calendar');
-})->name('calendar');
+Route::get('/private/noticias', [NoticiasController::class, 'index'])
+            ->name('noticias');
 
+Route::get('/private/secretaria', [SecretariaController::class, 'index'])
+            ->name('secretaria');
+
+Route::get('/private/login', [AuthController::class, 'index'])
+            ->name('login');            

@@ -1,4 +1,4 @@
-@extends('template.base')
+@extends('private.template.base')
 
 @section('title', 'Dashboard')
 
@@ -62,7 +62,7 @@
         <a href="forgot-password.html">Has olvidado tu contraseña?</a>
       </p>
       <p class="mb-0">
-        <a href="{{ route('register')}}" class="text-center">Haz una nueva cuenta aquí</a>
+        <a href="" class="text-center">Haz una nueva cuenta aquí</a>
       </p>
     </div>
     <!-- /.login-card-body -->
