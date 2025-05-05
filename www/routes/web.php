@@ -7,10 +7,14 @@ use App\Http\Controllers\CursosController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NoticiasController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SecretariaController;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/private/dashboard', 301);
+//Route::redirect('/', '/private/dashboard', 301);
+
+Route::get('/', [PublicController::class, 'index'])
+            ->name('public.home');
 
 Route::get('/private/dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
