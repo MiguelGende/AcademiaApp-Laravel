@@ -31,8 +31,9 @@ class AuthController extends Controller
 
 
     public function logout()
-    {
-        Session::flush();  // Elimina todos los datos de sesión
-        return view('public.home.index');  // Redirige al login
-    }
+{
+    Session::flush();  // Elimina todos los datos de sesión
+    return redirect()->route('public.home');  // Redirige correctamente a la parte pública
+}
+
 }

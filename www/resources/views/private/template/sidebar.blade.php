@@ -1,24 +1,23 @@
 <style>
   /* Ajuste cuando el sidebar está contraído */
-body.sidebar-collapse .content-wrapper.custom-full-width {
-    margin-left: 0 !important;
-    width: 100% !important;
-    overflow-x: hidden !important;
-}
-
+  body.sidebar-collapse .content-wrapper.custom-full-width {
+      margin-left: 0 !important;
+      width: 100% !important;
+      overflow-x: hidden !important;
+  }
 </style>
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link">
+  <a href="{{ route('dashboard') }}" class="brand-link">
     <span class="brand-text font-weight-light">Academia APP</span>
   </a>
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
         <!-- Usuario -->
         <li class="nav-item menu-open">
           <a href="#" class="nav-link active">
@@ -30,48 +29,45 @@ body.sidebar-collapse .content-wrapper.custom-full-width {
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('login') }}" class="nav-link active">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Login</p>
+                <p>Perfil</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Registro</p>
+                <p>Cursos</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                  <p>Cerrar sesión</p>
+                <p>Notificaciones</p>
               </a>
             </li>
-
           </ul>
         </li>
 
-        <!-- Sección de Ejemplos -->
+        <!-- Campus Virtual -->
         <li class="nav-header">CAMPUS VIRTUAL</li>
 
         <li class="nav-item">
           <a href="{{ route('calendario') }}" class="nav-link">
             <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
-                Calendario
-                <span class="badge badge-info right">2</span>
-              </p>
+            <p>
+              Calendario
+              <span class="badge badge-info right">2</span>
+            </p>
           </a>
         </li>
-
 
         <li class="nav-item">
           <a href="{{ route('noticias') }}" class="nav-link">
             <i class="nav-icon fas fa-newspaper"></i>
-              <p>Noticias</p>
+            <p>Noticias</p>
           </a>
         </li>
-
 
         <!-- Contáctanos -->
         <li class="nav-item">
@@ -90,13 +86,13 @@ body.sidebar-collapse .content-wrapper.custom-full-width {
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/mailbox/compose.html" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Profesorado</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/mailbox/read-mail.html" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Tutorías</p>
               </a>
@@ -105,43 +101,60 @@ body.sidebar-collapse .content-wrapper.custom-full-width {
         </li>
 
         <!-- Cursos -->
-        <li class="nav-item">
+        <li class="nav-item menu-open">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
               Cursos
-              <i class="fas fa-angle-left right"></i>
+              <i class="fas fa-angle-left right"></i> <!-- Esta es la flechita -->
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Informática</p>
+                <p>Laravel</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Programación</p>
+                <p>CSS</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>E-commerce</p>
+                <p>Bases de Datos</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Angular</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>PHP</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Ciberseguridad</p>
               </a>
             </li>
           </ul>
         </li>
+
       </ul>
     </nav>
-    <!-- /.sidebar-menu -->
   </div>
-  <!-- /.sidebar -->
-   <!-- Formulario oculto para logout -->
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    @csrf
-</form>
 
+  <!-- Formulario oculto para logout -->
+  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+      @csrf
+  </form>
 </aside>
