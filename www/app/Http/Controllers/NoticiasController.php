@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class NoticiasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $noticias = session('noticias', []);
         return view('private.noticias.index', compact('noticias'));
