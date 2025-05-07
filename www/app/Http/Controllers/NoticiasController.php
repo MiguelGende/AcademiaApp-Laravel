@@ -3,74 +3,87 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NoticiasController extends Controller
 {
-    public function index(Request $request)
-    {   // Esto simula una base de datos, esto se hara desde base de datos
-        $noticias = [
-            [
-                'titulo' => 'Lanzan nueva IA que detecta errores de código en tiempo real',
-                'categoria' => 'Inteligencia Artificial',
-                'contenido' => 'Una startup ha desarrollado un modelo que analiza código fuente y propone correcciones de manera instantánea.',
-                'fecha' => '2025-04-29',
-            ],
-            [
-                'titulo' => 'Laravel 11 añade soporte nativo para WebSockets',
-                'categoria' => 'Desarrollo Web',
-                'contenido' => 'La nueva versión del framework PHP más popular incluye integración directa con WebSockets.',
-                'fecha' => '2025-04-28',
-            ],
-            [
-                'titulo' => 'Google lanza su nuevo chip para IA generativa',
-                'categoria' => 'Inteligencia Artificial',
-                'contenido' => 'El chip promete ser un 35% más eficiente en tareas de generación de lenguaje natural.',
-                'fecha' => '2025-04-27',
-            ],
-            [
-                'titulo' => 'React 19 mejora el manejo de estado con nueva API',
-                'categoria' => 'Desarrollo Web',
-                'contenido' => 'La comunidad celebra la nueva API que simplifica la gestión de estado global sin Redux.',
-                'fecha' => '2025-04-26',
-            ],
-            [
-                'titulo' => 'Microsoft presenta una IA que resume código fuente',
-                'categoria' => 'Inteligencia Artificial',
-                'contenido' => 'La herramienta está pensada para mejorar la documentación técnica en grandes proyectos.',
-                'fecha' => '2025-04-25',
-            ],
-            [
-                'titulo' => 'Python 4.0 traerá mejoras radicales en concurrencia',
-                'categoria' => 'Informática',
-                'contenido' => 'Se anuncia una nueva arquitectura que elimina el GIL (Global Interpreter Lock).',
-                'fecha' => '2025-04-24',
-            ],
-            [
-                'titulo' => 'Se lanza una nueva herramienta para testing de APIs REST',
-                'categoria' => 'Desarrollo Web',
-                'contenido' => 'Esta herramienta promete ser un reemplazo directo para Postman con funcionalidades avanzadas.',
-                'fecha' => '2025-04-23',
-            ],
-            [
-                'titulo' => 'IA ayuda a detectar vulnerabilidades en tiempo real',
-                'categoria' => 'Ciberseguridad',
-                'contenido' => 'Nuevos modelos de IA están siendo entrenados para encontrar vulnerabilidades antes del despliegue.',
-                'fecha' => '2025-04-22',
-            ],
-            [
-                'titulo' => 'Vue 4 adopta Composition API como estándar principal',
-                'categoria' => 'Desarrollo Web',
-                'contenido' => 'El framework apuesta por una API más flexible para proyectos grandes y escalables.',
-                'fecha' => '2025-04-21',
-            ],
-            [
-                'titulo' => 'Curso gratuito sobre Machine Learning para desarrolladores web',
-                'categoria' => 'Educación',
-                'contenido' => 'El curso ofrece una introducción a modelos supervisados y no supervisados con ejemplos prácticos.',
-                'fecha' => '2025-04-20',
-            ],
-        ];
-    
+    public function index()
+    {
+        $noticias = session('noticias', []);
         return view('private.noticias.index', compact('noticias'));
+    }
+
+    public function create()
+    {
+        return view('private.noticias.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'categoria' => 'required|string|max:100',
+            'contenido' => 'required|string',
+        ]);
+
+        $noticia = [
+            'id' => Str::uuid()->toString(), // ID único
+            'titulo' => $request->titulo,
+            'categoria' => $request->categoria,
+            'contenido' => $request->contenido,
+            'fecha' => now()->toDateString(),
+        ];
+
+        $noticias = session('noticias', []);
+        array_unshift($noticias, $noticia);
+        session(['noticias' => $noticias]);
+
+        return redirect()->route('noticias')->with('success', 'Noticia creada correctamente.');
+    }
+
+    public function edit($id)
+    {
+        $noticias = session('noticias', []);
+        $noticia = collect($noticias)->firstWhere('id', $id);
+
+        if (!$noticia) {
+            return redirect()->route('noticias')->with('error', 'Noticia no encontrada.');
+        }
+
+        return view('private.noticias.edit', compact('noticia'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'categoria' => 'required|string|max:100',
+            'contenido' => 'required|string',
+            'fecha' => 'required|date',
+        ]);
+
+        $noticias = session('noticias', []);
+        foreach ($noticias as &$item) {
+            if ($item['id'] === $id) {
+                $item['titulo'] = $request->titulo;
+                $item['categoria'] = $request->categoria;
+                $item['contenido'] = $request->contenido;
+                $item['fecha'] = $request->fecha;
+                break;
+            }
+        }
+
+        session(['noticias' => $noticias]);
+
+        return redirect()->route('noticias')->with('success', 'Noticia actualizada correctamente.');
+    }
+
+    public function destroy($id)
+    {
+        $noticias = session('noticias', []);
+        $noticias = array_filter($noticias, fn($item) => $item['id'] !== $id);
+        session(['noticias' => array_values($noticias)]);
+
+        return redirect()->route('noticias')->with('success', 'Noticia eliminada correctamente.');
     }
 }

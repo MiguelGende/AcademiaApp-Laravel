@@ -34,7 +34,6 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
 /*
 |--------------------------------------------------------------------------
 | Rutas Privadas (Requieren autenticación simulada)
@@ -60,4 +59,25 @@ Route::middleware(['auth.simulado'])->group(function () {
 
     // Secretaría
     Route::get('/private/secretaria', [SecretariaController::class, 'index'])->name('secretaria');
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD Simulado de Noticias
+    |--------------------------------------------------------------------------
+    */
+
+    // Crear noticia
+    Route::get('/private/noticias/crear', [NoticiasController::class, 'create'])->name('noticias.create');
+    Route::post('/private/noticias', [NoticiasController::class, 'store'])->name('noticias.store');
+
+    // Editar noticia
+    Route::get('/private/noticias/{id}/editar', [NoticiasController::class, 'edit'])->name('noticias.edit');
+
+    // Actualizar noticia
+    Route::put('/private/noticias/{id}', [NoticiasController::class, 'update'])->name('noticias.update');
+
+    // Eliminar noticia
+    Route::delete('/private/noticias/{id}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
+
 });
+

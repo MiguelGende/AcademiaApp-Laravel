@@ -1,0 +1,85 @@
+@extends('private.template.base')
+
+@section('title', 'Editar Noticia')
+
+@section('content')
+<!-- Estilo local para centrar y optimizar el formulario -->
+<style>
+    .content-wrapper.custom-full-width {
+        width: 100%;
+        margin-left: 0 !important;
+        padding: 1rem;
+        box-sizing: border-box;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-container {
+        max-width: 700px;
+        margin: 0 auto; /* Centrado horizontal */
+        background: #fff;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .form-container h1 {
+        margin-bottom: 1rem;
+    }
+
+    .form-container .btn {
+        margin-top: 1rem;
+    }
+</style>
+<div class="content-wrapper custom-full-width">
+    <section class="content-header">
+        <div class="container-fluid">
+            <h1>Editar Noticia</h1>
+            <a href="{{ route('noticias') }}" class="btn btn-primary">Volver</a>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            {{-- Mensaje de éxito si lo hay --}}
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            {{-- Formulario de edición --}}
+            <form action="{{ route('noticias.update', $noticia['id']) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" name="titulo" class="form-control" value="{{ $noticia['titulo'] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" name="categoria" class="form-control" value="{{ $noticia['categoria'] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contenido">Contenido</label>
+                    <textarea name="contenido" class="form-control" rows="5" required>{{ $noticia['contenido'] }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" name="fecha" class="form-control" value="{{ $noticia['fecha'] }}" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Actualizar Noticia</button>
+            </form>
+        </div>
+    </section>
+</div>
+@endsection
