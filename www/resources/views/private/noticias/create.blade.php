@@ -62,11 +62,6 @@
                     <label class="form-check-label" for="is_published">¿Publicar ahora?</label>
                 </div>
 
-                <div class="form-group">
-                    <label for="published_at">Fecha de Publicación</label>
-                    <input type="datetime-local" name="published_at" class="form-control">
-                </div>
-
                 <button type="submit" class="btn btn-primary">Guardar Noticia</button>
             </form>
         </div>

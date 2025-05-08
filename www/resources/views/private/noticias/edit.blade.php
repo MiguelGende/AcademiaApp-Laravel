@@ -61,12 +61,6 @@
                     <label class="form-check-label" for="is_published">¿Publicar ahora?</label>
                 </div>
 
-                <div class="form-group">
-                    <label for="published_at">Fecha de Publicación</label>
-                    <input type="datetime-local" name="published_at" class="form-control"
-                        value="{{ old('published_at', $noticia->published_at ? $noticia->published_at->format('Y-m-d\TH:i') : '') }}">
-                </div>
-
                 <button type="submit" class="btn btn-primary">Actualizar Noticia</button>
             </form>
         </div>
