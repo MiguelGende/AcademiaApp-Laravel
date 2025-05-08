@@ -38,34 +38,37 @@
     <section class="content-header">
         <div class="container-fluid">
             <h1>Crear Nueva Noticia</h1>
-            <a href="{{ route('noticias') }}" class="btn btn-primary">Volver</a>
+            <a href="{{ route('noticias') }}" class="btn btn-secondary">Volver</a>
         </div>
     </section>
 
     <section class="content">
         <div class="container-fluid">
-            <div class="form-container">
-                <form action="{{ route('noticias.store') }}" method="POST">
-                    @csrf
+            <form action="{{ route('noticias.store') }}" method="POST">
+                @csrf
 
-                    <div class="form-group">
-                        <label for="titulo">Título</label>
-                        <input type="text" name="titulo" class="form-control" required>
-                    </div>
+                <div class="form-group">
+                    <label for="title">Título noticia</label>
+                    <input type="text" name="title" class="form-control" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="categoria">Categoría</label>
-                        <input type="text" name="categoria" class="form-control" required>
-                    </div>
+                <div class="form-group">
+                    <label for="content">Contenido</label>
+                    <textarea name="content" class="form-control" rows="5" ></textarea>
+                </div>
 
-                    <div class="form-group">
-                        <label for="contenido">Contenido</label>
-                        <textarea name="contenido" class="form-control" rows="5" required></textarea>
-                    </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" name="is_published" class="form-check-input" id="is_published">
+                    <label class="form-check-label" for="is_published">¿Publicar ahora?</label>
+                </div>
 
-                    <button type="submit" class="btn btn-primary">Guardar Noticia</button>
-                </form>
-            </div>
+                <div class="form-group">
+                    <label for="published_at">Fecha de Publicación</label>
+                    <input type="datetime-local" name="published_at" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar Noticia</button>
+            </form>
         </div>
     </section>
 </div>

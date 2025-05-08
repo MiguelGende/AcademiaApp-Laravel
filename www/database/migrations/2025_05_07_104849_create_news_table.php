@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->timestamps(); // created_at y updated_at
-            $table->string('tittle',255)->unique(); // Titulo de la noticia
+            $table->string('title',255)->unique(); // Titulo de la noticia
             $table->text('content'); // Contenido HTML o texto largo
             $table->boolean('is_published')->default(false); // Esta publicada?
             $table->timestamp('published_at')->nullable(); // Fecha de publicacion

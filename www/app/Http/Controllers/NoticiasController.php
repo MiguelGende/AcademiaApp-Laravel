@@ -2,88 +2,82 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class NoticiasController extends Controller
 {
     public function index(Request $request)
     {
-        $noticias = session('noticias', []);
+        //$noticias = News::latest()->get();
+        $noticias = News::orderByDesc('created_at')->get();
         return view('private.noticias.index', compact('noticias'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         return view('private.noticias.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'titulo' => 'required|string|max:255',
-            'categoria' => 'required|string|max:100',
-            'contenido' => 'required|string',
-        ]);
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255|unique:news',
+                'content' => 'required|string',
+                //'is_published' => 'nullable|boolean',
+                //'published_at' => 'nullable|date',
+            ]);
+        
+            
+            News::create([
+                'title' => $validated['title'],
+                'content' => $validated['content'],
+                'is_published' => $request->has('is_published'),
+                'published_at' => $request->published_at ?? null
+                //$request->is_published ? ($request->published_at ?? Carbon::now()) : null,
+            ]);
 
-        $noticia = [
-            'id' => Str::uuid()->toString(), // ID único
-            'titulo' => $request->titulo,
-            'categoria' => $request->categoria,
-            'contenido' => $request->contenido,
-            'fecha' => now()->toDateString(),
-        ];
-
-        $noticias = session('noticias', []);
-        array_unshift($noticias, $noticia);
-        session(['noticias' => $noticias]);
-
-        return redirect()->route('noticias')->with('success', 'Noticia creada correctamente.');
+            return redirect()->route('noticias')->with('success', 'Noticia creada correctamente.');
+        } catch(Exception $e) {
+            dd($e);
+        }
     }
 
     public function edit($id)
     {
-        $noticias = session('noticias', []);
-        $noticia = collect($noticias)->firstWhere('id', $id);
-
-        if (!$noticia) {
-            return redirect()->route('noticias')->with('error', 'Noticia no encontrada.');
-        }
-
+        $noticia = News::findOrFail($id);
         return view('private.noticias.edit', compact('noticia'));
     }
 
     public function update(Request $request, $id)
     {
+        $noticia = News::findOrFail($id);
+
         $request->validate([
-            'titulo' => 'required|string|max:255',
-            'categoria' => 'required|string|max:100',
+            'titulo' => 'required|string|max:255|unique:news,title,' . $noticia->id,
             'contenido' => 'required|string',
-            'fecha' => 'required|date',
+            'is_published' => 'nullable|boolean',
+            'published_at' => 'nullable|date',
         ]);
 
-        $noticias = session('noticias', []);
-        foreach ($noticias as &$item) {
-            if ($item['id'] === $id) {
-                $item['titulo'] = $request->titulo;
-                $item['categoria'] = $request->categoria;
-                $item['contenido'] = $request->contenido;
-                $item['fecha'] = $request->fecha;
-                break;
-            }
-        }
+        $noticia->update([
+            'title' => $request->titulo,
+            'content' => $request->contenido,
+            'is_published' => $request->has('is_published'),
+            'published_at' => $request->is_published ? ($request->published_at ?? Carbon::now()) : null,
+        ]);
 
-        session(['noticias' => $noticias]);
-
-        return redirect()->route('noticias')->with('success', 'Noticia actualizada correctamente.');
+        return redirect()->route('noticias.index')->with('success', 'Noticia actualizada correctamente.');
     }
 
     public function destroy($id)
     {
-        $noticias = session('noticias', []);
-        $noticias = array_filter($noticias, fn($item) => $item['id'] !== $id);
-        session(['noticias' => array_values($noticias)]);
+        $noticia = News::findOrFail($id);
+        $noticia->delete();
 
-        return redirect()->route('noticias')->with('success', 'Noticia eliminada correctamente.');
+        return redirect()->route('noticias.index')->with('success', 'Noticia eliminada correctamente.');
     }
 }

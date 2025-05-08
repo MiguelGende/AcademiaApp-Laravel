@@ -36,45 +36,35 @@
     <section class="content-header">
         <div class="container-fluid">
             <h1>Editar Noticia</h1>
-            <a href="{{ route('noticias') }}" class="btn btn-primary">Volver</a>
+            <a href="{{ route('noticias') }}" class="btn btn-secondary">Volver</a>
         </div>
     </section>
 
     <section class="content">
         <div class="container-fluid">
-            {{-- Mensaje de éxito si lo hay --}}
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-
-            {{-- Formulario de edición --}}
-            <form action="{{ route('noticias.update', $noticia['id']) }}" method="POST">
+            <form action="{{ route('noticias.update', $noticia->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="form-group">
-                    <label for="titulo">Título</label>
-                    <input type="text" name="titulo" class="form-control" value="{{ $noticia['titulo'] }}" required>
+                    <label for="title">Título</label>
+                    <input type="text" name="title" class="form-control" value="{{ old('title', $noticia->title) }}" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="categoria">Categoría</label>
-                    <input type="text" name="categoria" class="form-control" value="{{ $noticia['categoria'] }}" required>
+                    <label for="content">Contenido</label>
+                    <textarea name="content" class="form-control" rows="5" required>{{ old('content', $noticia->content) }}</textarea>
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" name="is_published" class="form-check-input" id="is_published" {{ $noticia->is_published ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_published">¿Publicar ahora?</label>
                 </div>
 
                 <div class="form-group">
-                    <label for="contenido">Contenido</label>
-                    <textarea name="contenido" class="form-control" rows="5" required>{{ $noticia['contenido'] }}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="fecha">Fecha</label>
-                    <input type="date" name="fecha" class="form-control" value="{{ $noticia['fecha'] }}" required>
+                    <label for="published_at">Fecha de Publicación</label>
+                    <input type="datetime-local" name="published_at" class="form-control"
+                        value="{{ old('published_at', $noticia->published_at ? $noticia->published_at->format('Y-m-d\TH:i') : '') }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Actualizar Noticia</button>

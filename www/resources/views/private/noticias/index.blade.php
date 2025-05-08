@@ -58,49 +58,69 @@
 <div class="content-wrapper custom-full-width">
     <section class="content-header">
         <div class="container-fluid">
-            <h1 class="mb-2">Últimas Noticias sobre Tecnología</h1>
-            <a href="{{ route('noticias.create') }}" class="btn btn-primary">Añadir Noticia</a>
+            <h1>Listado de Noticias</h1>
+            <a href="{{ route('noticias.create') }}" class="btn btn-success">Crear Nueva Noticia</a>
         </div>
     </section>
 
     <section class="content">
         <div class="container-fluid">
-            <div class="row g-3">
-                @foreach ($noticias as $noticia)
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card card-primary card-outline h-100 w-100">
-                            <div class="card-header d-flex justify-content-between">
-                                <h5 class="card-title">{{ $noticia['titulo'] }}</h5>
-                                <span class="badge badge-info">{{ $noticia['categoria'] }}</span>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">{{ $noticia['contenido'] }}</p>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between align-items-center">
-                                <small>Publicado el {{ $noticia['fecha'] }}</small>
-                                <div class="d-flex gap-2">
-                                    <!-- Botón Editar -->
-                                    <a href="{{ route('noticias.edit', $noticia['id']) }}" class="btn btn-sm btn-primary">
-                                        Editar
-                                    </a>
 
-                                    <!-- Botón Eliminar -->
-                                    <form action="{{ route('noticias.destroy', $noticia['id']) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta noticia?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger">Eliminar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                @if (count($noticias) === 0)
-                    <div class="col-12">
-                        <div class="alert alert-info">No hay noticias disponibles.</div>
-                    </div>
-                @endif
-            </div>
+            {{-- Mensajes de éxito --}}
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            {{-- Mensajes de error --}}
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Publicado</th>
+                        <th>Fecha de Publicación</th>
+                        <th>Creado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($noticias as $noticia)
+                        <tr>
+                            <td>{{ $noticia->title }}</td>
+                            <td>
+                                @if ($noticia->is_published)
+                                    <span class="badge badge-success">Sí</span>
+                                @else
+                                    <span class="badge badge-secondary">No</span>
+                                @endif
+                            </td>
+                            <td>{{ $noticia->published_at ? $noticia->published_at->format('d/m/Y H:i') : '-' }}</td>
+                            <td>{{ $noticia->created_at->format('d/m/Y') }}</td>
+                            <td>
+                                <a href="{{ route('noticias.edit', $noticia->id) }}" class="btn btn-sm btn-primary">Editar</a>
+
+                                <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de eliminar esta noticia?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5">No hay noticias registradas.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
         </div>
     </section>
 </div>
