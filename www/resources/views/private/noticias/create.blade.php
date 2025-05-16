@@ -54,7 +54,7 @@
 
                 <div class="form-group">
                     <label for="content">Contenido</label>
-                    <textarea name="content" class="form-control" rows="5" ></textarea>
+                    <textarea name="content" class="form-control" rows="5" required></textarea>
                 </div>
 
                 <div class="form-group form-check">
@@ -62,9 +62,32 @@
                     <label class="form-check-label" for="is_published">¿Publicar ahora?</label>
                 </div>
 
+                {{-- Checkboxes de categorías --}}
+                <div class="form-group">
+                    <label>Categorías</label>
+                    <div class="row">
+                        @foreach($categorias as $categoria)
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input type="checkbox" 
+                                           name="categories[]" 
+                                           value="{{ $categoria->id }}" 
+                                           class="form-check-input" 
+                                           id="categoria_{{ $categoria->id }}">
+                                    <label class="form-check-label" for="categoria_{{ $categoria->id }}">
+                                        {{ $categoria->name }}
+                                    </label>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Guardar Noticia</button>
             </form>
         </div>
     </section>
 </div>
+
+
 @endsection

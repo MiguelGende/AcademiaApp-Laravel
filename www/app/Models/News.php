@@ -13,6 +13,7 @@ class News extends Model
 
     protected $fillable = [
         'title',
+        'author',
         'content',
         'is_published',
         'published_at',
@@ -22,4 +23,12 @@ class News extends Model
         'is_published' => 'boolean',
         'published_at' => 'datetime',
     ];
+
+    /**
+     * Relación muchos a muchos con la tabla de categorías
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Categories::class, 'news_has_categories', 'news_id', 'categories_id');
+    }
 }

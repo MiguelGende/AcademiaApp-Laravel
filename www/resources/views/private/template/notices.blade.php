@@ -3,9 +3,9 @@
     <div class="row">
         @php
             $noticias = App\Models\News::where('is_published', true)
-                                    ->orderByDesc('published_at')
-                                    ->limit(4)
-                                    ->get();
+                                       ->orderByDesc('published_at')
+                                       ->limit(4)
+                                       ->get();
         @endphp
 
         @forelse($noticias as $noticia)
@@ -22,7 +22,7 @@
                     <div class="card-footer bg-transparent">
                         <small class="text-muted">
                             <i class="far fa-calendar-alt mr-1"></i>
-                            {{ $noticia->published_at->timezone(config('app.timezone'))->format('d/m/Y') }}
+                            {{ optional($noticia->published_at)->timezone(config('app.timezone'))->format('d/m/Y') }}
                         </small>
                     </div>
                 </div>
@@ -34,14 +34,15 @@
         @endforelse
     </div>
 
-    @if(count($noticias) > 0)
+    @if($noticias->count() > 0)
         <div class="text-center mt-2">
-          <a href="{{ route('noticias.list') }}" class="btn btn-sm btn-outline-info">
-            <i class="fas fa-newspaper mr-1"></i> Ver todas las noticias
-          </a>
+            <a href="{{ route('noticias.list') }}" class="btn btn-sm btn-outline-info">
+                <i class="fas fa-newspaper mr-1"></i> Ver todas las noticias
+            </a>
         </div>
     @endif
 </div>
+
 
 <style>
     .noticias-dashboard {

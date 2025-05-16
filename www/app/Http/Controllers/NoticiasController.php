@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\Models\News;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class NoticiasController extends Controller
 
     public function create(Request $request)
     {
-        return view('private.noticias.create');
+        $categorias = Categories::orderBy('name')->get();
+        return view('private.noticias.create', compact('categorias'));
     }
 
     public function store(Request $request)
@@ -28,13 +30,19 @@ class NoticiasController extends Controller
                 'title' => 'required|string|max:255|unique:news',
                 'content' => 'required|string',
             ]);
-            
-            News::create([
+
+            $noticia = News::create([
                 'title' => $validated['title'],
                 'content' => $validated['content'],
                 'is_published' => $request->has('is_published'),
-                'published_at' => $request->has('is_published') ? Carbon::now() : null
+                'published_at' => $request->has('is_published') ? Carbon::now() : null,
             ]);
+
+            // Asociar categorías
+            if ($request->filled('categories')) {
+                $noticia->categories()->sync($request->categories);
+            }
+
 
             return redirect()->route('noticias')
                    ->with('success', 'Noticia creada correctamente.');
@@ -43,7 +51,7 @@ class NoticiasController extends Controller
             return redirect()->back()
                    ->withErrors($e->validator)
                    ->withInput();
-                   
+
         } catch (Exception $e) {
             Log::error('Error al crear noticia: '.$e->getMessage());
             return redirect()->back()
@@ -55,7 +63,10 @@ class NoticiasController extends Controller
     public function edit($id)
     {
         $noticia = News::findOrFail($id);
-        return view('private.noticias.edit', compact('noticia'));
+        $categorias = Categories::orderBy('name')->get();
+        $noticiaCategorias = $noticia->categories->pluck('id')->toArray();
+
+        return view('private.noticias.edit', compact('noticia', 'categorias', 'noticiaCategorias'));
     }
 
     public function update(Request $request, $id)
@@ -64,7 +75,7 @@ class NoticiasController extends Controller
             $noticia = News::findOrFail($id);
 
             $validated = $request->validate([
-                'title' => 'required|string|max:255|unique:news,title,'.$noticia->id,
+                'title' => 'required|string|max:255|unique:news,title,' . $noticia->id,
                 'content' => 'required|string',
             ]);
 
@@ -72,8 +83,15 @@ class NoticiasController extends Controller
                 'title' => $validated['title'],
                 'content' => $validated['content'],
                 'is_published' => $request->has('is_published'),
-                'published_at' => $request->has('is_published') ? Carbon::now() : null
+                'published_at' => $request->has('is_published') ? Carbon::now() : null,
             ]);
+
+            // Actualizar categorías
+            if ($request->filled('categories')) {
+                $noticia->categories()->sync($request->categories);
+            } else {
+                $noticia->categories()->detach();
+            }
 
             return redirect()->route('noticias')
                    ->with('success', 'Noticia actualizada correctamente.');
@@ -82,9 +100,9 @@ class NoticiasController extends Controller
             return redirect()->back()
                    ->withErrors($e->validator)
                    ->withInput();
-                   
+
         } catch (Exception $e) {
-            Log::error('Error al actualizar noticia: '.$e->getMessage());
+            Log::error('Error al actualizar noticia: ' . $e->getMessage());
             return redirect()->back()
                    ->with('error', 'Ocurrió un error al actualizar la noticia')
                    ->withInput();
@@ -101,7 +119,7 @@ class NoticiasController extends Controller
                    ->with('success', 'Noticia eliminada correctamente.');
 
         } catch (Exception $e) {
-            Log::error('Error al eliminar noticia: '.$e->getMessage());
+            Log::error('Error al eliminar noticia: ' . $e->getMessage());
             return redirect()->back()
                    ->with('error', 'Ocurrió un error al eliminar la noticia');
         }
@@ -113,7 +131,7 @@ class NoticiasController extends Controller
                   ->orderByDesc('published_at')
                   ->limit(15)
                   ->get();
-    
+
         return view('private.noticias.list', compact('noticias'));
     }
 }

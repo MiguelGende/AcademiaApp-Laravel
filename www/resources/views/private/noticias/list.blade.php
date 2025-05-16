@@ -105,6 +105,9 @@
             <div class="noticia-col">
                 <div class="noticia-card">
                     <div class="card-header">
+                        <h6 class="text-primary mb-1">
+                            {{ $noticia->categoria?->name ?? 'Sin categoría' }}
+                        </h6>
                         <h3 class="card-title">{{ $noticia->title }}</h3>
                     </div>
                     <div class="card-body">
@@ -127,6 +130,7 @@
         @endforelse
     </div>
 </div>
+
 @endsection
 
 
