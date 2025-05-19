@@ -27,8 +27,13 @@
             <input type="text" name="name" class="form-control" value="{{ old('name', $category->name) }}" required>
         </div>
 
+        <div class="form-group">
+            <label for="description">Descripción</label>
+            <textarea name="description" class="form-control" rows="3" required>{{ old('description', $category->description) }}</textarea>
+        </div>
+
         <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Cancelar</a>
+        <a href="{{ route('categories.create') }}" class="btn btn-secondary">Volver</a>
     </form>
 </div>
 @endsection
