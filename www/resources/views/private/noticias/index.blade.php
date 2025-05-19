@@ -84,6 +84,7 @@
                 <thead>
                     <tr>
                         <th>Título</th>
+                        <th>Categoría(s)</th>
                         <th>Publicado</th>
                         <th>Fecha de Publicación</th>
                         <th>Creado</th>
@@ -94,6 +95,13 @@
                     @forelse ($noticias as $noticia)
                         <tr>
                             <td>{{ $noticia->title }}</td>
+                            <td>
+                                @forelse($noticia->categories as $categoria)
+                                    <span class="badge badge-primary">{{ $categoria->name }}</span>
+                                @empty
+                                    <span class="badge badge-secondary">Sin categoría</span>
+                                @endforelse
+                            </td>
                             <td>
                                 @if ($noticia->is_published)
                                     <span class="badge badge-success">Sí</span>
@@ -115,7 +123,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5">No hay noticias registradas.</td>
+                            <td colspan="6">No hay noticias registradas.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -124,4 +132,5 @@
         </div>
     </section>
 </div>
+
 @endsection

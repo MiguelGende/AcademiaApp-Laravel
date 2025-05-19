@@ -105,12 +105,18 @@
             <div class="noticia-col">
                 <div class="noticia-card">
                     <div class="card-header">
-                        <h6 class="text-primary mb-1">
-                            {{ $noticia->categoria?->name ?? 'Sin categoría' }}
-                        </h6>
-                        <h3 class="card-title">{{ $noticia->title }}</h3>
+                        <h3 class="card-title mb-1">{{ $noticia->title }}</h3>
                     </div>
                     <div class="card-body">
+                        {{-- Categorías justo encima del contenido --}}
+                        <div class="mb-2">
+                            @forelse($noticia->categories as $categoria)
+                                <span class="badge badge-primary">{{ $categoria->name }}</span>
+                            @empty
+                                <span class="badge badge-secondary">Sin categoría</span>
+                            @endforelse
+                        </div>
+
                         <div class="news-content">
                             {!! nl2br(e($noticia->content)) !!}
                         </div>
@@ -130,6 +136,7 @@
         @endforelse
     </div>
 </div>
+
 
 @endsection
 

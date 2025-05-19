@@ -2,10 +2,13 @@
     <h2 class="mb-4">Últimas Noticias</h2>
     <div class="row">
         @php
-            $noticias = App\Models\News::where('is_published', true)
-                                       ->orderByDesc('published_at')
-                                       ->limit(4)
-                                       ->get();
+            use App\Models\News;
+
+            $noticias = News::with('categories') // Eager loading de categorías
+                            ->where('is_published', true)
+                            ->orderByDesc('published_at')
+                            ->limit(4)
+                            ->get();
         @endphp
 
         @forelse($noticias as $noticia)
@@ -15,6 +18,16 @@
                         <h3 class="card-title">{{ Str::limit($noticia->title, 40) }}</h3>
                     </div>
                     <div class="card-body">
+                        {{-- Badges de categorías --}}
+                        <div class="mb-2">
+                            @forelse($noticia->categories as $categoria)
+                                <span class="badge badge-primary">{{ $categoria->name }}</span>
+                            @empty
+                                <span class="badge badge-secondary">Sin categoría</span>
+                            @endforelse
+                        </div>
+
+                        {{-- Extracto de la noticia --}}
                         <div class="news-excerpt">
                             {!! Str::limit(nl2br(e($noticia->content)), 80) !!}
                         </div>
@@ -42,6 +55,7 @@
         </div>
     @endif
 </div>
+
 
 
 <style>
