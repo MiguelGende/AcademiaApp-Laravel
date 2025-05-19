@@ -37,8 +37,9 @@
     <section class="content-header">
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <h1>Editar Noticia</h1>
-            <a href="{{ route('noticias') }}" class="btn btn-secondary">Volver</a>
+            
         </div>
+        <a href="{{ route('noticias') }}" class="btn btn-outline-secondary">Volver</a>
     </section>
 
     <section class="content">
@@ -98,7 +99,7 @@
                     <label class="form-check-label" for="is_published">¿Publicar ahora?</label>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Actualizar Noticia</button>
+                <button type="submit" class="btn btn-outline-primary">Actualizar Noticia</button>
             </form>
         </div>
     </section>

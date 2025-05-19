@@ -97,7 +97,7 @@
 <div class="noticias-wrapper">
     <section class="content-header">
         <h1>Noticias Recientes</h1>
-        <a href="{{ URL::previous() }}" class="btn btn-secondary">Volver</a>
+        <a href="{{ URL::previous() }}" class="btn btn-outline-secondary">Volver</a>
     </section>
 
     <div class="noticias-row">

@@ -38,7 +38,7 @@
     <section class="content-header">
         <div class="container-fluid">
             <h1>Crear Nueva Noticia</h1>
-            <a href="{{ route('noticias') }}" class="btn btn-secondary">Volver</a>
+            <a href="{{ route('noticias') }}" class="btn btn-outline-secondary">Volver</a>
         </div>
     </section>
 
@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Guardar Noticia</button>
+                <button type="submit" class="btn btn-outline-primary">Guardar Noticia</button>
             </form>
         </div>
     </section>

@@ -27,8 +27,8 @@
                     <textarea name="description" class="form-control" rows="3"></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="{{ route('noticias') }}" class="btn btn-secondary">Volver</a>
+                <button type="submit" class="btn btn-outline-primary">Guardar</button>
+                <a href="{{ route('noticias') }}" class="btn btn-outline-secondary">Volver</a>
             </form>
         </div>
     </div>
@@ -51,12 +51,12 @@
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->description ?? 'Sin descripción' }}</td>
                             <td>
-                                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary">Editar</a>
+                                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-outline-primary">Editar</a>
 
                                 <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Deseas eliminar esta categoría?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
+                                    <button class="btn btn-outline-danger" type="submit">Eliminar</button>
                                 </form>
                             </td>
                         </tr>

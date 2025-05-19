@@ -59,9 +59,9 @@
     <section class="content-header">
         <div class="container-fluid">
             <h1>Listado de Noticias</h1>
-            <a href="{{ route('noticias.create') }}" class="btn btn-success">Crear Nueva Noticia</a>
+            <a href="{{ route('noticias.create') }}" class="btn btn-outline-success">Crear Nueva Noticia</a>
             <a href="{{ route('categories.create') }}" class="btn btn-outline-primary">Crear Nueva Categoría</a>
-            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
+            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Volver</a>
         </div>
     </section>
 
@@ -86,7 +86,7 @@
                 <thead>
                     <tr>
                         <th>Título</th>
-                        <th>Categoría(s)</th>
+                        <th>Categoría</th>
                         <th>Publicado</th>
                         <th>Fecha de Publicación</th>
                         <th>Creado</th>
@@ -114,12 +114,12 @@
                             <td>{{ $noticia->published_at ? $noticia->published_at->format('d/m/Y H:i') : '-' }}</td>
                             <td>{{ $noticia->created_at->format('d/m/Y') }}</td>
                             <td>
-                                <a href="{{ route('noticias.edit', $noticia->id) }}" class="btn btn-sm btn-primary">Editar</a>
+                                <a href="{{ route('noticias.edit', $noticia->id) }}" class="btn btn-outline-primary">Editar</a>
 
                                 <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de eliminar esta noticia?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                    <button type="submit" class="btn btn-outline-danger">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
