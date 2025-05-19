@@ -60,6 +60,8 @@
         <div class="container-fluid">
             <h1>Listado de Noticias</h1>
             <a href="{{ route('noticias.create') }}" class="btn btn-success">Crear Nueva Noticia</a>
+            <a href="{{ route('categories.create') }}" class="btn btn-outline-primary">Crear Nueva Categoría</a>
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
         </div>
     </section>
 

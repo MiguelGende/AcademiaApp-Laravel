@@ -29,6 +29,8 @@ class NoticiasController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255|unique:news',
                 'content' => 'required|string',
+                'categories' => 'required|array',
+                'categories.*' => 'exists:categories,id',
             ]);
 
             $noticia = News::create([
@@ -38,11 +40,8 @@ class NoticiasController extends Controller
                 'published_at' => $request->has('is_published') ? Carbon::now() : null,
             ]);
 
-            // Asociar categorías
-            if ($request->filled('categories')) {
-                $noticia->categories()->sync($request->categories);
-            }
-
+            // Asociar categorías (muchos a muchos)
+            $noticia->categories()->sync($request->categories);
 
             return redirect()->route('noticias')
                    ->with('success', 'Noticia creada correctamente.');
@@ -53,7 +52,7 @@ class NoticiasController extends Controller
                    ->withInput();
 
         } catch (Exception $e) {
-            Log::error('Error al crear noticia: '.$e->getMessage());
+            Log::error('Error al crear noticia: ' . $e->getMessage());
             return redirect()->back()
                    ->with('error', 'Ocurrió un error al crear la noticia')
                    ->withInput();
@@ -77,6 +76,8 @@ class NoticiasController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255|unique:news,title,' . $noticia->id,
                 'content' => 'required|string',
+                'categories' => 'required|array',
+                'categories.*' => 'exists:categories,id',
             ]);
 
             $noticia->update([
@@ -86,12 +87,8 @@ class NoticiasController extends Controller
                 'published_at' => $request->has('is_published') ? Carbon::now() : null,
             ]);
 
-            // Actualizar categorías
-            if ($request->filled('categories')) {
-                $noticia->categories()->sync($request->categories);
-            } else {
-                $noticia->categories()->detach();
-            }
+            // Actualizar categorías (sincronizar)
+            $noticia->categories()->sync($request->categories);
 
             return redirect()->route('noticias')
                    ->with('success', 'Noticia actualizada correctamente.');

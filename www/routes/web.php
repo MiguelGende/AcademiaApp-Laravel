@@ -66,6 +66,9 @@ Route::middleware(['auth.simulado'])->group(function () {
     Route::get('/private/noticias/{id}/editar', [NoticiasController::class, 'edit'])->name('noticias.edit');
     Route::put('/private/noticias/{id}', [NoticiasController::class, 'update'])->name('noticias.update');
     Route::delete('/private/noticias/{id}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
+    
+    // Creacion de categorias
+    Route::resource('categories', App\Http\Controllers\CategoryController::class);
 
     // Secretaría
     Route::get('/private/secretaria', [SecretariaController::class, 'index'])->name('secretaria');

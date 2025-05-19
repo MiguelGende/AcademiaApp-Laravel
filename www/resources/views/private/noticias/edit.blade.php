@@ -34,7 +34,7 @@
 </style>
 <div class="content-wrapper custom-full-width">
     <section class="content-header">
-        <div class="container-fluid">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
             <h1>Editar Noticia</h1>
             <a href="{{ route('noticias') }}" class="btn btn-secondary">Volver</a>
         </div>
@@ -56,6 +56,18 @@
                     <textarea name="content" class="form-control" rows="5" required>{{ old('content', $noticia->content) }}</textarea>
                 </div>
 
+                <div class="form-group">
+                    <label for="categories">Categorías</label>
+                    <select name="categories[]" id="categories" class="form-control" multiple required>
+                        @foreach($categorias as $categoria)
+                            <option value="{{ $categoria->id }}"
+                                {{ in_array($categoria->id, old('categories', $noticiaCategorias)) ? 'selected' : '' }}>
+                                {{ $categoria->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="form-group form-check">
                     <input type="checkbox" name="is_published" class="form-check-input" id="is_published" {{ $noticia->is_published ? 'checked' : '' }}>
                     <label class="form-check-label" for="is_published">¿Publicar ahora?</label>
@@ -66,4 +78,5 @@
         </div>
     </section>
 </div>
+
 @endsection
