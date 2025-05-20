@@ -52,6 +52,7 @@
         <!-- Campus Virtual -->
         <li class="nav-header">CAMPUS VIRTUAL</li>
 
+        <!-- Calendario -->
         <li class="nav-item">
           <a href="{{ route('calendario') }}" class="nav-link">
             <i class="nav-icon far fa-calendar-alt"></i>
@@ -62,11 +63,41 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a href="{{ route('noticias') }}" class="nav-link">
+        <!-- Noticias -->
+        <li class="nav-item has-treeview {{ request()->is('noticias*') || request()->is('categories*') || request()->is('sliders*') ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ request()->is('noticias*') || request()->is('categories*') || request()->is('sliders*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-newspaper"></i>
-            <p>Noticias</p>
+            <p>
+              Noticias
+              <i class="right fas fa-angle-left"></i>
+            </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('noticias') }}" class="nav-link {{ request()->routeIs('noticias.index') ? 'active' : '' }}">
+                <i class="far fa-list-alt nav-icon"></i>
+                <p>Listado de Noticias</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('noticias.create') }}" class="nav-link {{ request()->routeIs('noticias.create') ? 'active' : '' }}">
+                <i class="far fa-plus-square nav-icon"></i>
+                <p>Crear Noticia</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('categories.create') }}" class="nav-link {{ request()->routeIs('categories.create') ? 'active' : '' }}">
+                <i class="fas fa-tags nav-icon"></i>
+                <p>Crear Categoría</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('sliders.create') }}" class="nav-link {{ request()->routeIs('sliders.index') ? 'active' : '' }}">
+                <i class="fas fa-sliders-h nav-icon"></i>
+                <p>Sliders</p>
+              </a>
+            </li>
+          </ul>
         </li>
 
         <!-- Contáctanos -->
@@ -101,12 +132,12 @@
         </li>
 
         <!-- Cursos -->
-        <li class="nav-item menu-open">
+        <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
               Cursos
-              <i class="fas fa-angle-left right"></i> <!-- Esta es la flechita -->
+              <i class="fas fa-angle-left right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
@@ -155,6 +186,6 @@
 
   <!-- Formulario oculto para logout -->
   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-      @csrf
+    @csrf
   </form>
 </aside>

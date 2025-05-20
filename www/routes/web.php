@@ -9,6 +9,7 @@ use App\Http\Controllers\AlumnosController;
 use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\SecretariaController;
+use App\Http\Controllers\SliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,11 +67,28 @@ Route::middleware(['auth.simulado'])->group(function () {
     Route::get('/private/noticias/{id}/editar', [NoticiasController::class, 'edit'])->name('noticias.edit');
     Route::put('/private/noticias/{id}', [NoticiasController::class, 'update'])->name('noticias.update');
     Route::delete('/private/noticias/{id}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
-    
-    // Creacion de categorias
+
+    /*
+    |--------------------------------------------------------------------------
+    | Módulo de Sliders
+    |--------------------------------------------------------------------------
+    | - Listado + Formulario de creación en la misma vista (index)
+    | - POST para guardar
+    | - PATCH para cambiar estado (activo/inactivo)
+    */
+
+    // Mostrar todos los sliders y el formulario
+    Route::get('/private/sliders', [SliderController::class, 'index'])->name('sliders.index');
+
+    // Crear un nuevo slider (POST)
+    Route::post('/private/sliders', [SliderController::class, 'create'])->name('sliders.create');
+
+    // Alternar estado activo/inactivo (AJAX)
+    Route::patch('/private/sliders/{id}/toggle', [SliderController::class, 'toggle'])->name('sliders.toggle');
+
+    // Creación de categorías (resource completo)
     Route::resource('categories', App\Http\Controllers\CategoryController::class);
 
     // Secretaría
     Route::get('/private/secretaria', [SecretariaController::class, 'index'])->name('secretaria');
-
 });
