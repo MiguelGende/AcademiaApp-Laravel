@@ -92,7 +92,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('sliders.create') }}" class="nav-link {{ request()->routeIs('sliders.index') ? 'active' : '' }}">
+              <a href="{{ route('sliders.index') }}" class="nav-link {{ request()->routeIs('sliders.index') ? 'active' : '' }}">
                 <i class="fas fa-sliders-h nav-icon"></i>
                 <p>Sliders</p>
               </a>

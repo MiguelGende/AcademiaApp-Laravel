@@ -76,19 +76,17 @@ Route::middleware(['auth.simulado'])->group(function () {
     | - POST para guardar
     | - PATCH para cambiar estado (activo/inactivo)
     */
-
-    // Mostrar todos los sliders y el formulario
     Route::get('/private/sliders', [SliderController::class, 'index'])->name('sliders.index');
-
-    // Crear un nuevo slider (POST)
-    Route::post('/private/sliders', [SliderController::class, 'create'])->name('sliders.create');
-
-    // Alternar estado activo/inactivo (AJAX)
+    Route::post('/private/sliders', [SliderController::class, 'store'])->name('sliders.store');
     Route::patch('/private/sliders/{id}/toggle', [SliderController::class, 'toggle'])->name('sliders.toggle');
+    Route::get('/private/sliders/test', [SliderController::class, 'test']);
+
+
 
     // Creación de categorías (resource completo)
     Route::resource('categories', App\Http\Controllers\CategoryController::class);
 
     // Secretaría
     Route::get('/private/secretaria', [SecretariaController::class, 'index'])->name('secretaria');
+
 });
