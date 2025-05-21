@@ -8,7 +8,6 @@ $(document).ready(function () {
     });
 
     $('.toggle-status').click(function () {
-        console.log('✅ Botón clicado');
 
         const $btn = $(this);
         const sliderId = $btn.data('id');

@@ -10,37 +10,23 @@ use Illuminate\Http\Request;
 
 class NoticiasController extends Controller
 {
-    public function index()
+    // Api que consumirá la APP de ionic
+   public function index(Request $request)
     {
-        $news = News::latest()->get();
-        
+        $query = News::query();
+
+        // Filtrar por categoría si se proporciona
+        if ($request->has('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $news = $query->latest()->get();
+
         return response()->json([
             'result' => "OK",
             'message' => "Datos obtenidos correctamente",
             'success' => true,
             'data' => $news,
         ]);
-    }
-
-    // TODO sustituir por este código
-    // Api que consumirá la APP de ionic
-   /* public function index(Request $request)
-{
-    $query = News::query();
-
-    // Filtrar por categoría si se proporciona
-    if ($request->has('category_id')) {
-        $query->where('category_id', $request->category_id);
-    }
-
-    $news = $query->latest()->get();
-
-    return response()->json([
-        'result' => "OK",
-        'message' => "Datos obtenidos correctamente",
-        'success' => true,
-        'data' => $news,
-    ]);
-}  */
-
+    }  
 }
