@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 
@@ -16,8 +17,8 @@ class NoticiasController extends Controller
         $query = News::query();
 
         // Filtrar por categoría si se proporciona
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->category_id);
+        if ($request->has('categories_id')) {
+            $query->where('categories_id', $request->categories_id);
         }
 
         $news = $query->latest()->get();
@@ -28,5 +29,19 @@ class NoticiasController extends Controller
             'success' => true,
             'data' => $news,
         ]);
-    }  
+    }
+    
+    
+    public function slidersByCategory($categoryId)
+    {
+        $sliders = Slider::where('categories_id', $categoryId)->where('is_active', true)->get();
+
+        return response()->json([
+            'result' => 'OK',
+            'message' => 'Sliders obtenidos correctamente',
+            'success' => true,
+            'data' => $sliders,
+        ]);
+    }
+
 }

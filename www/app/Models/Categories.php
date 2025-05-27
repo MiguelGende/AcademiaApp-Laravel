@@ -23,4 +23,11 @@ class Categories extends Model
     {
         return $this->belongsToMany(News::class, 'news_has_categories', 'categories_id', 'news_id');
     }
+
+    
+    public function sliders()
+    {
+        return $this->hasMany(Slider::class);
+    }
+
 }

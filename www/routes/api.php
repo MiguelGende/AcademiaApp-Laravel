@@ -9,3 +9,5 @@ Route::get('/', function() {
 });
 
 Route::get('/news', [NoticiasController::class, 'index']);
+
+Route::get('/sliders/category/{id}', [NoticiasController::class, 'slidersByCategory']);

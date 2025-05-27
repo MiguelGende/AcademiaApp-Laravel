@@ -22,4 +22,11 @@ class Slider extends Model
         'is_active' => 'boolean',
         'order' => 'integer',
     ];
+
+
+    public function categories()
+    {
+        return $this->belongsTo(Categories::class);
+    }
+
 }
